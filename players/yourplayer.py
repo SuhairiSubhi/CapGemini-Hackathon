@@ -1,20 +1,17 @@
-"""
-Stratégie de l'équipe Les Meilleurs.
+"""Stratégie d'exemple : un joueur qui cherche des items."""
 
-<Ajoutez ici une notice de copyright>
-"""
-from game import Action, Game, Player
+from random import choice
+
+from game import Action, Game, Player, Tile
 
 
 class BestPlayer(Player):
-    """Stratégie de l'équipe Les Meilleurs."""
+    """Le célèbre aventurier."""
 
-    NAME = "n - Les Meilleurs"
-NAME = "n - Les Meilleurs"
+    NAME = "5 - Nautilus"
 
     def play(self, game: Game) -> Action:
-        """Choisit la meilleure action possible dans la situation donnée en paramètre."""
-
+        """Cherche les objets les plus proches et se mettre en sécurité."""
         # Renvoie `True` si la destination est acceptable
         accept_target = (
             lambda x, y: game.background[y][x] == Tile.FLOOR
@@ -83,3 +80,5 @@ NAME = "n - Les Meilleurs"
                 if is_safe(new_x, new_y) and not explored[new_y][new_x]:
                     paths.append((new_x, new_y, direction))  # Direction d'origine
                     explored[new_y][new_x] = True
+
+        return choice([Action.ATTACK_UP,Action.ATTACK_RIGHT,Action.ATTACK_DOWN,Action.ATTACK_LEFT])
