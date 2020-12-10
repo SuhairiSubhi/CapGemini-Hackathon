@@ -42,14 +42,42 @@ class Nautilus(Player):
             Action.MOVE_LEFT,
             Action.MOVE_RIGHT,
         ):
+
             # Coordonnées de la case voisine
             x, y = direction.apply((self.x, self.y))
 
             # Si on peut aller dans cette direction, on explore les possibilités offertes
             if self.is_action_valid(direction):
-                # On retient quelle est la direction de départ
+            # On retient quelle est la direction de départ
                 paths.append((x, y, direction))
                 explored[y][x] = True
+
+        # Cherche joueur à attaquer
+
+        for direction in (
+            Action.MOVE_UP,
+            Action.MOVE_DOWN,
+            Action.MOVE_LEFT,
+            Action.MOVE_RIGHT,
+            ):
+            # Coordonnées de l'ennemi
+            x,y = self.x, self.y
+            for chercheur in range(1,4):
+                if direction == Action.MOVE_UP and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                elif direction == Action.MOVE_DOWN and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                elif direction == Action.MOVE_LEFT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                elif direction == Action.MOVE_RIGHT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                else :
+                        None;
+
+            if game.tile_grid[y][x].is_player():
+                return direction.to_attack()
+            else:
+                None;
 
         # Cherche boule a feu
         for direction in (
@@ -58,7 +86,9 @@ class Nautilus(Player):
             Action.MOVE_LEFT,
             Action.MOVE_RIGHT,
         ):
-            # Coordonnées de boulke de feu
+
+
+            # Coordonnées de boule de feu
             x,y = self.x, self.y
             for chercheur in range(1,5):
                     if direction == Action.MOVE_UP and game.background[y][x] != Tile.WALL:
@@ -106,32 +136,7 @@ class Nautilus(Player):
             else:
                 None;
 
-        # Cherche joueur à attaquer
 
-        for direction in (
-            Action.MOVE_UP,
-            Action.MOVE_DOWN,
-            Action.MOVE_LEFT,
-            Action.MOVE_RIGHT,
-        ):
-            # Coordonnées de l'ennemi
-            x,y = self.x, self.y
-            for chercheur in range(1,4):
-                    if direction == Action.MOVE_UP and game.background[y][x] != Tile.WALL :
-                        x, y = direction.apply((x,y))
-                    elif direction == Action.MOVE_DOWN and game.background[y][x] != Tile.WALL :
-                        x, y = direction.apply((x,y))
-                    elif direction == Action.MOVE_LEFT and game.background[y][x] != Tile.WALL :
-                        x, y = direction.apply((x,y))
-                    elif direction == Action.MOVE_RIGHT and game.background[y][x] != Tile.WALL :
-                        x, y = direction.apply((x,y))
-                    else :
-                        None;
-
-            if game.tile_grid[y][x].is_player():
-                return direction.to_attack()
-            else:
-                None;
 
 
         # Tant qu'il existe des chemins possibles
