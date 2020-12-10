@@ -83,10 +83,8 @@ class Nautilus(Player):
                     return Action.MOVE_RIGHT
                 elif self.is_action_valid(Action.MOVE_LEFT) and direction == Action.MOVE_LEFT and self.action != Action.MOVE_LEFT:
                     return Action.MOVE_LEFT
-                elif self.can_player_attack:
-                    return direction.to_attack()
                 else:
-                    None
+                    return direction.to_attack()
             else:
                 None
 
