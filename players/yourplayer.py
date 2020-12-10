@@ -6,7 +6,7 @@ from game import Action, Game, Player, Tile
 
 
 class BestPlayer(Player):
-    """Le célèbre aventurier."""
+    """Le célèbre sous-marins"""
 
     NAME = "5 - Nautilus"
 
