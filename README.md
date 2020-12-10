@@ -1,4 +1,4 @@
-C4EST UN TEST
+tzest
 # Perfect Aim
 
 ## Règles du jeu
