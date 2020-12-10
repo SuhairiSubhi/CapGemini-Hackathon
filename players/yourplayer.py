@@ -1,25 +1,14 @@
 """Stratégie d'exemple : un joueur qui cherche des items."""
 
-<<<<<<< HEAD
 <Ajoutez ici une notice de copyright>
 """
 from game import Action, Game, Player, Tile
 from random import choice
-=======
-from random import choice
-
-from game import Action, Game, Player, Tile
-
->>>>>>> 95e47aedd97d8b8c647806c5a5ae43e67c38b2cd
 
 class BestPlayer(Player):
     """Le célèbre sous-marins"""
 
-<<<<<<< HEAD
-    NAME = "n - Les Meilleurs"
-=======
     NAME = "5 - Nautilus"
->>>>>>> 95e47aedd97d8b8c647806c5a5ae43e67c38b2cd
 
     def play(self, game: Game) -> Action:
         """Cherche les objets les plus proches et se mettre en sécurité."""
@@ -122,8 +111,5 @@ class BestPlayer(Player):
                 if is_safe(new_x, new_y) and not explored[new_y][new_x]:
                     paths.append((new_x, new_y, direction))  # Direction d'origine
                     explored[new_y][new_x] = True
-<<<<<<< HEAD
-=======
 
->>>>>>> 95e47aedd97d8b8c647806c5a5ae43e67c38b2cd
         return choice([Action.ATTACK_UP,Action.ATTACK_RIGHT,Action.ATTACK_DOWN,Action.ATTACK_LEFT])
