@@ -3,14 +3,13 @@ Stratégie de l'équipe Les Meilleurs.
 
 <Ajoutez ici une notice de copyright>
 """
-from game import Action, Game, Player
-
+from game import Action, Game, Player, Tile
+from random import choice
 
 class BestPlayer(Player):
     """Stratégie de l'équipe Les Meilleurs."""
 
     NAME = "n - Les Meilleurs"
-NAME = "n - Les Meilleurs"
 
     def play(self, game: Game) -> Action:
         """Choisit la meilleure action possible dans la situation donnée en paramètre."""
@@ -57,6 +56,37 @@ NAME = "n - Les Meilleurs"
                 paths.append((x, y, direction))
                 explored[y][x] = True
 
+        for direction in (
+            Action.MOVE_UP,
+            Action.MOVE_DOWN,
+            Action.MOVE_LEFT,
+            Action.MOVE_RIGHT,
+        ):
+            # Coordonnées de l'ennemi
+            x,y = self.x, self.y
+            for chercheur in range(1,4):
+                    if direction == Action.MOVE_UP and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_DOWN and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_LEFT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_RIGHT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    else :
+                        None;
+
+            if game.tile_grid[y][x].is_player():
+                return direction.to_attack()
+            elif game.tile_grid[y][x].is_player():
+                return direction.to_attack()
+            elif game.tile_grid[y][x].is_player():
+                return direction.to_attack()
+            elif game.tile_grid[y][x].is_player():
+                return direction.to_attack()
+            else:
+                None;
+
         # Tant qu'il existe des chemins possibles
         while len(paths) > 0:
 
@@ -83,3 +113,4 @@ NAME = "n - Les Meilleurs"
                 if is_safe(new_x, new_y) and not explored[new_y][new_x]:
                     paths.append((new_x, new_y, direction))  # Direction d'origine
                     explored[new_y][new_x] = True
+        return choice([Action.ATTACK_UP,Action.ATTACK_RIGHT,Action.ATTACK_DOWN,Action.ATTACK_LEFT])
