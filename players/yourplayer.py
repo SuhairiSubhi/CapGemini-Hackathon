@@ -109,4 +109,12 @@ class BestPlayer(Player):
                     paths.append((new_x, new_y, direction))  # Direction d'origine
                     explored[new_y][new_x] = True
 
+          if self.is_action_valid(Action.MOVE_RIGHT) :
+                    return Action.ATTACK_RIGHT
+          if self.is_action_valid(Action.MOVE_UP) :
+                    return Action.ATTACK_UP
+         if self.is_action_valid(Action.MOVE_DOWN) :
+                    return Action.ATTACK_DOWN
+          if self.is_action_valid(Action.MOVE_LEFT) :
+                    return Action.ATTACK_LEFT
         return choice([Action.ATTACK_UP,Action.ATTACK_RIGHT,Action.ATTACK_DOWN,Action.ATTACK_LEFT])
