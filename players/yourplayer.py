@@ -1,7 +1,4 @@
 """Stratégie d'exemple : un joueur qui cherche des items."""
-
-<Ajoutez ici une notice de copyright>
-"""
 from game import Action, Game, Player, Tile
 from random import choice
 
