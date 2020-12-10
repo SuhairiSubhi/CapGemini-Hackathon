@@ -1,8 +1,8 @@
 """Stratégie d'exemple : un joueur qui cherche des items."""
-from game import Action, Game, Player, Tile
+from game import Action, Game, Player, Tile, entities
 from random import choice
 
-class BestPlayer(Player):
+class Nautilus(Player):
     """Le célèbre sous-marins"""
 
     NAME = "5 - Nautilus"
@@ -51,6 +51,63 @@ class BestPlayer(Player):
                 paths.append((x, y, direction))
                 explored[y][x] = True
 
+        # Cherche boule a feu
+        for direction in (
+            Action.MOVE_UP,
+            Action.MOVE_DOWN,
+            Action.MOVE_LEFT,
+            Action.MOVE_RIGHT,
+        ):
+            # Coordonnées de boulke de feu
+            x,y = self.x, self.y
+            for chercheur in range(1,5):
+                    if direction == Action.MOVE_UP and game.background[y][x] != Tile.WALL:
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_DOWN and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_LEFT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    elif direction == Action.MOVE_RIGHT and game.background[y][x] != Tile.WALL :
+                        x, y = direction.apply((x,y))
+                    else :
+                        None;
+
+                    if game.background[y][x] == Tile.SUPER_FIREBALL or game.background[y][x] == Tile.FIREBALL:
+                        break
+
+            if isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_UP:
+                if self.is_action_valid(Action.MOVE_RIGHT) and is_safe(x, y):
+                    return Action.MOVE_RIGHT
+                elif self.is_action_valid(Action.MOVE_LEFT) and is_safe(x, y):
+                    return Action.MOVE_LEFT
+                else:
+                    return Action.MOVE_DOWN
+            elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_DOWN:
+                if self.is_action_valid(Action.MOVE_RIGHT) and is_safe(x, y):
+                    return Action.MOVE_RIGHT
+                elif self.is_action_valid(Action.MOVE_LEFT) and is_safe(x, y):
+                    return Action.MOVE_LEFT
+                else:
+                    return Action.MOVE_UP
+            elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_RIGHT:
+                if self.is_action_valid(Action.MOVE_UP) and is_safe(x, y):
+                    return Action.MOVE_UP
+                elif self.is_action_valid(Action.MOVE_DOWN) and is_safe(x, y):
+                    return Action.MOVE_DOWN
+                else:
+                    return Action.MOVE_LEFT
+            elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_LEFT:
+                if self.is_action_valid(Action.MOVE_UP) and is_safe(x, y):
+                    return Action.MOVE_UP
+                elif self.is_action_valid(Action.MOVE_DOWN) and is_safe(x, y):
+                    return Action.MOVE_DOWN
+                else:
+                    return Action.MOVE_RIGHT
+            else:
+                None;
+
+        # Cherche joueur à attaquer
+
         for direction in (
             Action.MOVE_UP,
             Action.MOVE_DOWN,
@@ -73,14 +130,9 @@ class BestPlayer(Player):
 
             if game.tile_grid[y][x].is_player():
                 return direction.to_attack()
-            elif game.tile_grid[y][x].is_player():
-                return direction.to_attack()
-            elif game.tile_grid[y][x].is_player():
-                return direction.to_attack()
-            elif game.tile_grid[y][x].is_player():
-                return direction.to_attack()
             else:
                 None;
+
 
         # Tant qu'il existe des chemins possibles
         while len(paths) > 0:
