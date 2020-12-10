@@ -75,9 +75,20 @@ class Nautilus(Player):
                         None;
 
             if game.tile_grid[y][x].is_player():
-                return direction.to_attack()
+                if self.is_action_valid(Action.MOVE_UP) and direction == Action.MOVE_UP and self.action != Action.MOVE_UP:
+                    return Action.MOVE_UP
+                elif self.is_action_valid(Action.MOVE_DOWN) and direction == Action.MOVE_DOWN and self.action != Action.MOVE_DOWN:
+                    return Action.MOVE_DOWN
+                elif self.is_action_valid(Action.MOVE_RIGHT) and direction == Action.MOVE_RIGHT and self.action != Action.MOVE_RIGHT:
+                    return Action.MOVE_RIGHT
+                elif self.is_action_valid(Action.MOVE_LEFT) and direction == Action.MOVE_LEFT and self.action != Action.MOVE_LEFT:
+                    return Action.MOVE_LEFT
+                elif self.can_player_attack:
+                    return direction.to_attack()
+                else:
+                    None
             else:
-                None;
+                None
 
         # Cherche boule a feu
         for direction in (
@@ -110,31 +121,39 @@ class Nautilus(Player):
                     return Action.MOVE_RIGHT
                 elif self.is_action_valid(Action.MOVE_LEFT) and is_safe(x, y):
                     return Action.MOVE_LEFT
-                else:
+                elif self.is_action_valid(Action.MOVE_DOWN):
                     return Action.MOVE_DOWN
+                else:
+                    None
             elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_DOWN:
                 if self.is_action_valid(Action.MOVE_RIGHT) and is_safe(x, y):
                     return Action.MOVE_RIGHT
                 elif self.is_action_valid(Action.MOVE_LEFT) and is_safe(x, y):
                     return Action.MOVE_LEFT
-                else:
+                elif self.is_action_valid(Action.MOVE_UP):
                     return Action.MOVE_UP
+                else:
+                    None
             elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_RIGHT:
                 if self.is_action_valid(Action.MOVE_UP) and is_safe(x, y):
                     return Action.MOVE_UP
                 elif self.is_action_valid(Action.MOVE_DOWN) and is_safe(x, y):
                     return Action.MOVE_DOWN
-                else:
+                elif self.is_action_valid(Action.MOVE_LEFT):
                     return Action.MOVE_LEFT
+                else:
+                    None
             elif isinstance(game.tile_grid[y][x], entities.Fireball) and direction == Action.MOVE_LEFT:
                 if self.is_action_valid(Action.MOVE_UP) and is_safe(x, y):
                     return Action.MOVE_UP
                 elif self.is_action_valid(Action.MOVE_DOWN) and is_safe(x, y):
                     return Action.MOVE_DOWN
-                else:
+                elif self.is_action_valid(Action.MOVE_RIGHT):
                     return Action.MOVE_RIGHT
+                else:
+                    None
             else:
-                None;
+                None
 
 
 
